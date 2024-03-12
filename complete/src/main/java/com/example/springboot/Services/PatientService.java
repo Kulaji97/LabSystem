@@ -1,7 +1,7 @@
 package com.example.springboot.Services;
 
-import com.example.springboot.Entities.Patient;
-import com.example.springboot.Repositories.PatientRepository;
+import com.example.springboot.Entities.User;
+import com.example.springboot.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,20 +9,20 @@ import org.springframework.stereotype.Service;
 public class PatientService {
 
     @Autowired
-    private PatientRepository patientRepository;
+    private UserRepository userRepository;
     public String someMethod() {
         // Common logic for endpoint1
 
         return "Response from someMethod";
     }
 
-    public String anotherMethod(Patient patient) {
+    public String anotherMethod(User user) {
         // Common logic for endpoint2
         return "Response from anotherMethod";
     }
 
-    public Patient savePatient(Patient patient)
+    public User savePatient(User user)
     {
-        return patientRepository.save(patient);
+        return userRepository.save(user);
     }
 }

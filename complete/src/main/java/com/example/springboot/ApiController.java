@@ -1,6 +1,6 @@
 package com.example.springboot;
 
-import com.example.springboot.Entities.Patient;
+import com.example.springboot.Entities.User;
 import com.example.springboot.Services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +23,11 @@ public class ApiController {
 
 
 	@PostMapping("/patients/create")
-	public ResponseEntity<String> createPatient(@RequestBody Patient patient)
+	public ResponseEntity<String> createPatient(@RequestBody User user)
 	{
 		try
 		{
-			patientService.savePatient(patient);
+			patientService.savePatient(user);
 			return ResponseEntity.status(HttpStatus.CREATED).body("Patient saved successfully");
 		}
 		catch (Exception exception)

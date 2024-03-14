@@ -29,10 +29,6 @@ public class Test {
     @JoinColumn(name = "AppointmentID")
     private Appointment appointment;
 
-    @ManyToOne
-    @JoinColumn(name = "TypeID")
-    private TestType type;
-
     public Integer getId() {
         return id;
     }
@@ -73,12 +69,5 @@ public class Test {
         this.appointment = appointment;
     }
 
-    public TestType getType() {
-        return type;
-    }
-
-    public void setType(TestType type) {
-        this.type = type;
-    }
 }
 

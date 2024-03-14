@@ -1,5 +1,6 @@
 package com.example.springboot.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -17,6 +18,8 @@ public class Appointment {
     private Integer doctorId;
     @Column(name = "Number")
     private Integer number;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    //ex: 2020-12-31T15:53:16.45
     @Column(name = "Time")
     private LocalDateTime time;
     @Column(name = "Amount")
@@ -31,6 +34,18 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "PatientID")
     private User patient;
+
+    @ManyToOne
+    @JoinColumn(name = "TestTypeID")
+    private TestType testType;
+
+    public TestType getTestType() {
+        return testType;
+    }
+
+    public void setTestType(TestType testType) {
+        this.testType = testType;
+    }
 
     public Integer getId() {
         return id;
@@ -95,5 +110,14 @@ public class Appointment {
     public void setPatient(User patient) {
         this.patient = patient;
     }
+
+    public Integer getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(Integer doctorId) {
+        this.doctorId = doctorId;
+    }
+
 }
 

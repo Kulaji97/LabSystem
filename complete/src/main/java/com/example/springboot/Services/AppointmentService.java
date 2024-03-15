@@ -5,6 +5,7 @@ import com.example.springboot.Entities.Appointment;
 import com.example.springboot.Entities.TestType;
 import com.example.springboot.Entities.User;
 import com.example.springboot.Entities.UserType;
+import com.example.springboot.PaymentStatus;
 import com.example.springboot.Repositories.AppointmentRepository;
 import com.example.springboot.Repositories.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +54,23 @@ public class AppointmentService {
 
         //create new appointment
         Appointment newAppointment = appointment;
+        newAppointment.setPaymentStatus(PaymentStatus.AWAITING_PAYMENT);
         newAppointment.setTime(newAppointmentTime);
         newAppointment.setNumber(newAppointmentNumber);
 
         return appointmentRepository.save(newAppointment);
+    }
+
+    public Appointment updatePaymentDetails(Appointment newAppointment) throws ChangeSetPersister.NotFoundException {
+        Appointment appointment = getAppointment(newAppointment);
+        appointment.setPaymentDate(newAppointment.getPaymentDate());
+        appointment.setPaymentMethod(newAppointment.getPaymentMethod());
+        if (appointment.getAmount() == newAppointment.getAmount()) {
+            appointment.setPaymentStatus(PaymentStatus.PAID);
+        } else {
+            appointment.setPaymentStatus(PaymentStatus.PARTIAL);
+        }
+
+        return appointmentRepository.save(appointment);
     }
 }

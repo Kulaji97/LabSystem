@@ -16,11 +16,6 @@ public class PatientService {
     public PatientService() {
         this.databaseSingleton = DatabaseSingleton.getInstance();
     }
-    public String someMethod() {
-        return "Response from someMethod";
-    }
-
-    public String anotherMethod(User user) { return "Response from anotherMethod"; }
 
     public User savePatient(User user)
     {

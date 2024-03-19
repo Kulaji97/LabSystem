@@ -17,9 +17,9 @@ public class User {
     private String username;
     @Column(name = "Password")
     private String password;
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = true)
     private String name;
-    @Column(name = "Email")
+    @Column(name = "Email", nullable = true)
     private String email;
     @Column(name = "NIC", nullable = true)
     private String nic;
@@ -27,7 +27,7 @@ public class User {
     private String gender;
 
     @ManyToOne
-    @JoinColumn(name = "TypeID")
+    @JoinColumn(name = "TypeID", nullable = true)
     private UserType type;
 
     public Integer getId() {

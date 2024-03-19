@@ -6,6 +6,8 @@ import com.example.springboot.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientService {
 
@@ -20,5 +22,14 @@ public class PatientService {
     public User savePatient(User user)
     {
         return userRepository.save(user);
+    }
+
+    public List<User> getAllPatients()
+    {
+        return userRepository.findAll();
+    }
+    public List<User> authenticateUser(String username, String password)
+    {
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 }

@@ -26,11 +26,13 @@ public class EmailController {
     @PostMapping("/send-html-email")
     public String sendHtmlEmail(@RequestBody EmailRequestService emailRequest) {
         Context context = new Context();
+        context.setVariable("date", "2024-03-16");
         context.setVariable("name", "Thish");
         context.setVariable("email", "tripledot1998@gmail.com");
-        context.setVariable("testname", "Blood");
-        context.setVariable("testtype", "1");
-        context.setVariable("amount", "Rs.1100");
+        context.setVariable("test_name", "Blood");
+        context.setVariable("test_type", "1");
+        context.setVariable("test_amount", "1100");
+        context.setVariable("payment_method", "CREDIT CARD");
 
         emailService.sendEmailWithHtmlTemplate(emailRequest.getTo(), emailRequest.getSubject(), "email-template", context);
         return "HTML email sent successfully!";

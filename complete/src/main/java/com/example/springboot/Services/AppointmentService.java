@@ -1,5 +1,6 @@
 package com.example.springboot.Services;
 
+import com.example.springboot.DTOs.AppointmentDto;
 import com.example.springboot.DatabaseConnection.DatabaseSingleton;
 import com.example.springboot.Entities.Appointment;
 import com.example.springboot.Entities.TestType;
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AppointmentService {
@@ -35,6 +34,31 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(patientAppointment.getId())
                 .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
         return appointment;
+    }
+
+    public List<AppointmentDto> getAppointmentByPatientId(Integer patientId) {
+        List<Appointment> appointments = appointmentRepository.findAppointmentByPatientId(patientId);
+        List<AppointmentDto> appointmentDtos = new ArrayList<>();
+
+        if (appointments.size() > 1){
+            Collections.sort(appointments, (o1, o2) -> o1.getTime().compareTo( o2.getTime()));
+            for (Appointment appointment : appointments)
+            {
+                AppointmentDto appointmentDto = new AppointmentDto();
+                appointmentDto.id = appointment.getId();
+                appointmentDto.amount = appointment.getAmount();
+                appointmentDto.doctorId = appointment.getDoctorId();
+                appointmentDto.number = appointment.getNumber();
+                appointmentDto.time = appointment.getTime();
+                appointmentDto.patientId = appointment.getPatient().getId();
+                appointmentDto.paymentDate = appointment.getPaymentDate();
+                appointmentDto.paymentStatus = appointment.getPaymentStatus();
+                appointmentDto.testTypeId = appointment.getTestType().getId();
+                appointmentDto.testName = appointment.getTestType().getType();
+                appointmentDtos.add(appointmentDto);
+            }
+        }
+        return appointmentDtos;
     }
 
     public int generateAppointmentNumber(int testTypeId, LocalDate date)

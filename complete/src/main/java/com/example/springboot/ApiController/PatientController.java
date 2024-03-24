@@ -1,10 +1,12 @@
 package com.example.springboot.ApiController;
 
+import com.example.springboot.DTOs.UserDto;
 import com.example.springboot.Entities.User;
 import com.example.springboot.Entities.UserType;
 import com.example.springboot.Services.AppointmentService;
 import com.example.springboot.Services.PatientService;
 import com.example.springboot.Services.UserTypeService;
+import com.google.protobuf.Int32Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,20 +30,28 @@ public class PatientController {
 
     @CrossOrigin(origins = "http://localhost:4200/")
     @PostMapping("/patients/create")
-    public ResponseEntity<String> createPatient(@RequestBody User user)
+    public ResponseEntity<UserDto> createPatient(@RequestBody UserDto userDto)
     {
         try
         {
-            System.out.println(user.getName());
-            UserType userType = userTypeService.getUserType(user);
 
+            System.out.println(userDto.name);
+
+            UserType userType = userTypeService.getUserType(userDto.type);
+            User user = new User();
+            user.setUsername(userDto.username);
+            user.setGender(userDto.gender);
+            user.setName(userDto.name);
+            user.setNic(userDto.nic);
+            user.setEmail(userDto.email);
+            user.setPassword(userDto.password);
             user.setType(userType);
             user = patientService.savePatient(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user.getId().toString());
+            return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
         }
         catch (Exception exception)
         {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
@@ -76,6 +86,71 @@ public class PatientController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200/")
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable String id)
+    {
+        try
+        {
+            User user = patientService.getUserDetailsById(Integer.parseInt(id));
+            UserDto userDto = new UserDto();
+            userDto.id = user.getId();
+            userDto.email = user.getEmail();
+            userDto.nic = user.getNic();
+            userDto.gender = user.getGender();
+            userDto.name = user.getName();
+            userDto.type = user.getType().getId();
+            userDto.username = user.getUsername();
+            userDto.password = user.getPassword();
+            return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        }
+        catch (Exception exception)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200/")
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUserById(@PathVariable String id,
+                                               @RequestBody User newUser)
+    {
+        System.out.println("-------------------------UPDATE ------------------------------");
+        try
+        {
+            User user = patientService.getUserDetailsById(Integer.parseInt(id));
+            user.setName(newUser.getName());
+            user.setNic(newUser.getNic());
+            user.setUsername(newUser.getUsername());
+            user.setPassword(newUser.getPassword());
+            user.setEmail(newUser.getEmail());
+            patientService.savePatient(user);
+
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        catch (Exception exception)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200/")
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<User> deleteUserById(@PathVariable String id)
+    {
+        try
+        {
+            User user = patientService.getUserDetailsById(Integer.parseInt(id));
+            patientService.deleteUser(user);
+
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        catch (Exception exception)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200/")
     @PostMapping("/users/authenticate")
     public ResponseEntity<User> authenticateUser(@RequestBody User user)
     {
@@ -84,7 +159,7 @@ public class PatientController {
             System.out.println(user.getUsername() + " " + user.getPassword());
             System.out.println(LocalDateTime.now());
             List<User> users = patientService.authenticateUser(user.getUsername(), user.getPassword());
-            if (users.stream().count() > 0) {
+            if (users.size()> 0) {
                 System.out.println("1 is there");
                 System.out.println(users.getFirst().getName());
                 return ResponseEntity.status(HttpStatus.OK).body(users.getFirst());

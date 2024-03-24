@@ -1,0 +1,127 @@
+<!-- <div class="container">
+    <h2>User Details</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label font-weight-bold">Name:</label>
+          <div>{{ user?.name }}</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label font-weight-bold">NIC:</label>
+          <div>{{ user?.nic }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label font-weight-bold">Email:</label>
+          <div>{{ user?.email }}</div>
+        </div>
+        <div class="mb-3">
+          <label class="font-weight-bold">Username:</label>
+          <div>{{ user?.username }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-primary me-2" (click)="uploadTest()">Upload Test</button>
+        <button class="btn btn-success" (click)="payNow()">Pay Now</button>
+      </div>
+    </div>
+  </div>
+   -->
+
+<div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <img src="https://www.kindpng.com/picc/m/24-248500_yellow-green-smile-end-user-clip-art-hd.png"
+                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                <h5>{{ user?.name }}</h5>
+                <p>{{ user?.type == "1" ? "Patient" : (user?.type == "2" ? "Doctor" : "Technician")  }}</p>
+                <i class="far fa-edit mb-5"></i>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>User Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{ user?.email }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Gender</h6>
+                      <p class="text-muted">{{ user?.gender }}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>NIC</h6>
+                        <p class="text-muted">{{ user?.nic }}</p>
+                      </div>
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    <a routerLink="/users/edit/{{user?.id}}" class="btn btn-sm btn-primary me-1">Edit Details</a>
+                    <a routerLink="/users" class="btn btn-sm btn-secondary me-1">Go Back</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row d-flex justify-content-center align-items-center h-100" *ngIf="user?.type=='1'" >
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="card-body p-4">
+                <h6>Test Information</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <!-- <div class="col-6 mb-3">
+                    <h6>Test Type</h6>
+                    <p class="text-muted">info@example.com</p>
+                  </div> -->
+                  <div class="col-6 mb-3">
+                    <h6>Payment Status</h6>
+                    <p class="text-muted">No available data yet</p>
+                  </div>
+                </div>
+
+                <div>
+                    <label>List of Appointments: </label>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Appointment Number</th>
+                            <th scope="col">Test Type</th>
+                            <th scope="col">Date & Time</th>
+                            <th scope="col">View</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let appointment of appointments">
+                                <th scope="row">{{ appointment.number }}</th>
+                                <td>{{ appointment.testName }}</td>
+                                <td>{{ appointment.time }}</td>
+                                <td><button class="btn btn-info me-2">View</button></td>
+                              </tr>
+                        </tbody>
+                      </table>
+
+
+
+                    
+                  </div>
+                
+                <button class="btn btn-success me-2" (click)="uploadTest()">Add Appointment</button>
+                <!-- <button class="btn btn-warning" (click)="payNow()">Pay Now</button> -->
+              </div>
+            
+        </div>
+    </div>
+  </div>
+    </div>

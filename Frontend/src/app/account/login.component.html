@@ -1,0 +1,29 @@
+﻿<div class="card">
+    <h4 class="card-header"><img class="card-img-top" style="width: 50px; margin-right: 15px;"  src="https://www.kindpng.com/picc/m/144-1443851_medical-logo-png-medical-laboratory-logo-png-transparent.png"  alt="Logo">Login</h4>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+            </div>
+            <div>
+                <button [disabled]="loading" style="margin-right: 15px" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Login
+                </button>
+                
+                <button routerLink="../register" class="btn btn-success">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -19,8 +19,8 @@ public class UserTypeService {
         this.databaseSingleton = DatabaseSingleton.getInstance();
     }
 
-    public UserType getUserType(User user) throws ChangeSetPersister.NotFoundException {
-        UserType userType = userTypeRepository.findById(user.getType().getId())
+    public UserType getUserType(Integer typeId) throws ChangeSetPersister.NotFoundException {
+        UserType userType = userTypeRepository.findById(typeId)
                 .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
 
         return userType;

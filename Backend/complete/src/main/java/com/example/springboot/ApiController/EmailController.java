@@ -27,8 +27,8 @@ public class EmailController {
     public String sendHtmlEmail(@RequestBody EmailRequestService emailRequest) {
         Context context = new Context();
         context.setVariable("date", "2024-03-16");
-        context.setVariable("name", "Thish");
-        context.setVariable("email", "tripledot1998@gmail.com");
+        context.setVariable("name", "Kulaji Lawanya");
+        context.setVariable("email", "klawanya97@gmail.com");
         context.setVariable("test_name", "Blood");
         context.setVariable("test_type", "1");
         context.setVariable("test_amount", "1100");

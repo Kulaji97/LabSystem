@@ -14,12 +14,6 @@ public class Test {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
-//    @Column(name = "AppointmentID")
-//    private Integer appointmentId;
-//    @Column(name = "TypeID")
-//    private Integer typeId;
-//    @Column(name = "DoctorID", nullable = true)
-//    private Integer doctorId;
     @Column(name = "TechnicianID", nullable = true)
     private Integer technicianId;
     @Column(name = "ResultDescription", nullable = true)
@@ -36,14 +30,6 @@ public class Test {
     public void setId(Integer id) {
         this.id = id;
     }
-
-//    public Integer getDoctorId() {
-//        return doctorId;
-//    }
-//
-//    public void setDoctorId(Integer doctorId) {
-//        this.doctorId = doctorId;
-//    }
 
     public Integer getTechnicianId() {
         return technicianId;

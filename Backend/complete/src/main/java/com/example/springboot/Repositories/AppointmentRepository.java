@@ -17,4 +17,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Integer
      @Query(value = "SELECT * FROM APPOINTMENT WHERE test_typeid = ?1 AND time >= ?2", nativeQuery = true)
      public List<Appointment> findByTestTypeAndDate(int testTypeId, LocalDate date);
 
+     @Query(value = "SELECT * FROM APPOINTMENT WHERE patientid = ?1", nativeQuery = true)
+     public List<Appointment> findAppointmentByPatientId(int patientid);
+
 }

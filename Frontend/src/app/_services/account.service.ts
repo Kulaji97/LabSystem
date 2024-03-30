@@ -100,6 +100,7 @@ export class AccountService {
     }
 
     getAppointmentByPatientId(userId: string) {
+        alert("user id" + userId);
         return this.http.get<Appointment[]>(`http://localhost:8080/user/appointment/${userId}`);
     }
 

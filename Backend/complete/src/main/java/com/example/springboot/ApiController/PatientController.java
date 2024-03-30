@@ -33,9 +33,9 @@ public class PatientController {
         try
         {
 
-            System.out.println(userDto.name);
+            System.out.println(userDto.type);
 
-            UserType userType = userTypeService.getUserType(userDto.type);
+            UserType userType = userTypeService.getUserType(1);
             User user = new User();
             user.setUsername(userDto.username);
             user.setGender(userDto.gender);
@@ -45,10 +45,11 @@ public class PatientController {
             user.setPassword(userDto.password);
             user.setType(userType);
             user = patientService.savePatient(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
+            return ResponseEntity.status(HttpStatus.OK).body(userDto);
         }
         catch (Exception exception)
         {
+            System.out.println(exception);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -110,17 +111,17 @@ public class PatientController {
     @CrossOrigin(origins = "http://localhost:4200/")
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserById(@PathVariable String id,
-                                               @RequestBody User newUser)
+                                               @RequestBody UserDto newUser)
     {
         System.out.println("-------------------------UPDATE ------------------------------");
         try
         {
             User user = patientService.getUserDetailsById(Integer.parseInt(id));
-            user.setName(newUser.getName());
-            user.setNic(newUser.getNic());
-            user.setUsername(newUser.getUsername());
-            user.setPassword(newUser.getPassword());
-            user.setEmail(newUser.getEmail());
+            user.setName(newUser.name);
+            user.setNic(newUser.nic);
+            user.setUsername(newUser.username);
+            user.setPassword(newUser.password);
+            user.setEmail(newUser.email);
             patientService.savePatient(user);
 
             return ResponseEntity.status(HttpStatus.OK).body(user);

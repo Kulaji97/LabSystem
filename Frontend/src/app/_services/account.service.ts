@@ -53,6 +53,7 @@ export class AccountService {
 
     register(user: User) {
         //creating a patient
+        alert(user.email);
         return this.http.post<User>(`http://localhost:8080/patients/create`, user);
     }
 

@@ -30,10 +30,40 @@ public class AppointmentService {
         this.databaseSingleton = DatabaseSingleton.getInstance();
     }
 
-    public Appointment getAppointment(Appointment patientAppointment) throws ChangeSetPersister.NotFoundException {
-        Appointment appointment = appointmentRepository.findById(patientAppointment.getId())
+    public Appointment getAppointment(Integer id) throws ChangeSetPersister.NotFoundException {
+        Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
         return appointment;
+    }
+    public AppointmentDto getAppointmentById(Integer id) throws ChangeSetPersister.NotFoundException {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
+
+        AppointmentDto appointmentDto = new AppointmentDto();
+        appointmentDto.id = appointment.getId();
+        appointmentDto.amount = appointment.getAmount();
+        appointmentDto.doctorId = appointment.getDoctorId();
+        appointmentDto.number = appointment.getNumber();
+        appointmentDto.time = appointment.getTime();
+        appointmentDto.patientId = appointment.getPatient().getId();
+        appointmentDto.paymentDate = appointment.getPaymentDate();
+        System.out.println(appointment.getPaymentStatus());
+        appointmentDto.paymentStatus = getPaymentStatusName(appointment.getPaymentStatus());
+        appointmentDto.testTypeId = appointment.getTestType().getId();
+        appointmentDto.testName = appointment.getTestType().getType();
+
+        return appointmentDto;
+    }
+
+    public String getPaymentStatusName(Integer status){
+        if (status == (PaymentStatus.AWAITING_PAYMENT)) {
+            return "Awaiting Payment";
+        }
+        else if (status == (PaymentStatus.PAID)) {
+            return "Paid";
+        } else {
+            return "Partial Payment";
+        }
     }
 
     public List<AppointmentDto> getAppointmentByPatientId(Integer patientId) {
@@ -52,7 +82,7 @@ public class AppointmentService {
                 appointmentDto.time = appointment.getTime();
                 appointmentDto.patientId = appointment.getPatient().getId();
                 appointmentDto.paymentDate = appointment.getPaymentDate();
-                appointmentDto.paymentStatus = appointment.getPaymentStatus();
+                appointmentDto.paymentStatus = getPaymentStatusName(appointment.getPaymentStatus());
                 appointmentDto.testTypeId = appointment.getTestType().getId();
                 appointmentDto.testName = appointment.getTestType().getType();
                 appointmentDtos.add(appointmentDto);
@@ -85,11 +115,11 @@ public class AppointmentService {
         return appointmentRepository.save(newAppointment);
     }
 
-    public Appointment updatePaymentDetails(Appointment newAppointment) throws ChangeSetPersister.NotFoundException {
-        Appointment appointment = getAppointment(newAppointment);
-        appointment.setPaymentDate(newAppointment.getPaymentDate());
-        appointment.setPaymentMethod(newAppointment.getPaymentMethod());
-        if (appointment.getAmount() == newAppointment.getAmount()) {
+    public Appointment updatePaymentDetails(AppointmentDto newAppointment) throws ChangeSetPersister.NotFoundException {
+        Appointment appointment = getAppointment(newAppointment.id);
+        appointment.setPaymentDate(newAppointment.paymentDate);
+        appointment.setPaymentMethod(newAppointment.paymentMethod);
+        if (appointment.getAmount() == newAppointment.amount) {
             appointment.setPaymentStatus(PaymentStatus.PAID);
         } else {
             appointment.setPaymentStatus(PaymentStatus.PARTIAL);

@@ -10,4 +10,6 @@ export class Appointment {
     patientId?:string;
     testTypeId?:string;
     testName?:string;
+    totalAmount?:string;
+    email?:string;
 }

@@ -1,0 +1,72 @@
+<!-- <div class="container">
+    <h2>User Details</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label font-weight-bold">Name:</label>
+          <div>{{ user?.name }}</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label font-weight-bold">NIC:</label>
+          <div>{{ user?.nic }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label font-weight-bold">Email:</label>
+          <div>{{ user?.email }}</div>
+        </div>
+        <div class="mb-3">
+          <label class="font-weight-bold">Username:</label>
+          <div>{{ user?.username }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-primary me-2" (click)="uploadTest()">Upload Test</button>
+        <button class="btn btn-success" (click)="payNow()">Pay Now</button>
+      </div>
+    </div>
+  </div>
+   -->
+
+<div class="container py-5 h-100">
+      
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="card-body p-4">
+                <h6>Appointment Information</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Date</h6>
+                    <p class="text-muted">{{ appointment?.time }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Payment Status</h6>
+                    <p class="text-muted">{{ appointment?.paymentStatus }}</p>
+                  </div>
+                </div>
+
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Appointment Number</h6>
+                    <p class="text-muted">{{appointment?.number}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Test Type</h6>
+                    <p class="text-muted">{{appointment?.testName}}</p>
+                  </div>
+                </div>
+                
+                <button class="btn btn-success me-2" (click)="uploadTest()">Upload Test Results</button>
+                <a routerLink="/appointments/{{appointment?.id}}/payment" class="btn btn-warning">Pay >></a>
+              </div>
+            
+        </div>
+    </div>
+  </div>
+    </div>

@@ -98,7 +98,15 @@ export class AccountService {
             }));
     }
 
-    getAppointmentByPatientId(id: string) {
-        return this.http.get<Appointment[]>(`http://localhost:8080/user/appointment/${id}`);
+    getAppointmentByPatientId(userId: string) {
+        return this.http.get<Appointment[]>(`http://localhost:8080/user/appointment/${userId}`);
+    }
+
+    getAppointmentById(id: string) {
+        return this.http.get<Appointment>(`http://localhost:8080/appointment/${id}`);
+    }
+
+    updateAppointment(id: string, params: any){
+        return this.http.put<any>(`http://localhost:8080/appointment/${id}`, params);
     }
 }

@@ -32,7 +32,6 @@ public class PatientController {
     {
         try
         {
-
             System.out.println(userDto.name);
 
             UserType userType = userTypeService.getUserType(userDto.type);

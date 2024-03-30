@@ -107,7 +107,7 @@
                                 <th scope="row">{{ appointment.number }}</th>
                                 <td>{{ appointment.testName }}</td>
                                 <td>{{ appointment.time }}</td>
-                                <td><button class="btn btn-info me-2">View</button></td>
+                                <td><a routerLink="/appointments/view/{{ appointment.id }}" class="btn btn-sm btn-info me-1">View</a></td>
                               </tr>
                         </tbody>
                       </table>

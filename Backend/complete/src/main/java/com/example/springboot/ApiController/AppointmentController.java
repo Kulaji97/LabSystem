@@ -41,7 +41,7 @@ public class AppointmentController {
 	}
 
 	@PostMapping("/patients/pay")
-	public ResponseEntity<String> recievePayment(@RequestBody Appointment appointment) throws ChangeSetPersister.NotFoundException {
+	public ResponseEntity<String> recievePayment(@RequestBody AppointmentDto appointment) throws ChangeSetPersister.NotFoundException {
 		Appointment updatedAppointment = appointmentService.updatePaymentDetails(appointment);
 		return ResponseEntity.status(HttpStatus.CREATED).body(updatedAppointment.getPaymentStatus().toString());
 	}
@@ -53,6 +53,38 @@ public class AppointmentController {
 		{
 			List<AppointmentDto> appointments = appointmentService.getAppointmentByPatientId(Integer.parseInt(id));
 			return ResponseEntity.status(HttpStatus.CREATED).body(appointments);
+		}
+		catch (Exception exception)
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
+
+	@GetMapping("/appointment/{id}")
+	public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable String id)
+	{
+		try
+		{
+			AppointmentDto appointment = appointmentService.getAppointmentById(Integer.parseInt(id));
+			return ResponseEntity.status(HttpStatus.CREATED).body(appointment);
+		}
+		catch (Exception exception)
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200/")
+	@PutMapping("/appointment/{id}")
+	public ResponseEntity<String> updateAppointmentById(@PathVariable String id,
+											   @RequestBody AppointmentDto appointment)
+	{
+		System.out.println(appointment.email);
+		try
+		{
+			Appointment updatedAppointment = appointmentService.updatePaymentDetails(appointment);
+			return ResponseEntity.status(HttpStatus.CREATED).body(updatedAppointment.getPaymentStatus().toString());
+
 		}
 		catch (Exception exception)
 		{

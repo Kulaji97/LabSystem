@@ -12,4 +12,5 @@ export class Appointment {
     testName?:string;
     totalAmount?:string;
     email?:string;
+    patientName?:string;
 }

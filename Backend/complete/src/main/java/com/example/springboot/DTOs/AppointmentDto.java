@@ -16,9 +16,9 @@ public class AppointmentDto {
     @Nullable
     public Integer number;
     public String email;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Nullable
-    public LocalDateTime time;
+    public String time;
     @Nullable
     public String amount;
     @Nullable
@@ -32,4 +32,5 @@ public class AppointmentDto {
     public Integer patientId;
     public Integer testTypeId;
     public String testName;
+    public String patientName;
 }

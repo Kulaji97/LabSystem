@@ -9,7 +9,6 @@ export class AppComponent {
     user?: User | null;
 
     constructor(private accountService: AccountService) {
-        alert("app.component!");
         this.accountService.user.subscribe(x => this.user = x);
     }
 

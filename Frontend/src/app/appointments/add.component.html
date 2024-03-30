@@ -1,0 +1,46 @@
+<h1>Add Appointment</h1>
+<form  [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="mb-3 col">
+            <label class="form-label">Patient Name : </label>
+            <input class="form-control" value="{{user?.name}}" disabled/>
+        </div>
+        <div class="mb-3 col">
+            <label class="form-label">Patient Email : </label>
+            <input class="form-control" value="{{user?.email}}" disabled/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col">
+            <label class="form-label">Test Type</label>
+            <select formControlName="testtype" class="form-select">
+                <option value="1">Urine</option>
+                <option value="2">Blood</option>
+            </select>
+        </div>
+        <div class="mb-3 col">
+            <label class="form-label">Doctor</label>
+            <select formControlName="doctor" class="form-select">
+                <!-- Loop through doctors array and generate options -->
+                <option *ngFor="let doctor of doctors" [value]="doctor.id">{{ doctor.name }}</option>
+            </select>
+        </div>
+        <div class="mb-3 col">
+            <label class="form-label">Date</label>
+            <input type="date" formControlName="date" class="form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 col">
+            <label class="form-label">Amount </label>
+            <input class="form-control" value="Rs. 100.00" disabled/>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <button class="btn btn-primary" style="margin-right: 5px;">
+            Save
+        </button>
+        <a routerLink="/users/view/{{user?.id}}" class="btn btn-danger">Cancel</a>
+    </div>
+</form>

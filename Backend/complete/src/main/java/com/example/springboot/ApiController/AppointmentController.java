@@ -43,6 +43,19 @@ public class AppointmentController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getLocalizedMessage());
 		}
 	}
+	@GetMapping("/appointments/all")
+	public ResponseEntity<List<AppointmentDto>> createAppointment()
+	{
+		try
+		{
+			List<AppointmentDto> appointments = appointmentService.getAll();
+			return ResponseEntity.status(HttpStatus.CREATED).body(appointments);
+		}
+		catch (Exception exception)
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
 
 	@PostMapping("/patients/pay")
 	public ResponseEntity<String> recievePayment(@RequestBody AppointmentDto appointment) throws ChangeSetPersister.NotFoundException {

@@ -33,6 +33,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,42 +53,42 @@ public class PatientControllerTest {
 
     @Test
     public void testGetAllAppointments() {
-        // Mock data
-//        Appointment appointment1 = new Appointment();
-//        appointment1.setId(1);
-//        appointment1.setAmount(100.0);
-//        // Set other appointment properties
-//
-//        Appointment appointment2 = new Appointment();
-//        appointment2.setId(2);
-//        appointment2.setAmount(200.0);
-//        // Set other appointment properties
-//
-//        List<Appointment> appointments = new ArrayList<>();
-//        appointments.add(appointment1);
-//        appointments.add(appointment2);
-//
-//        // Mock the behavior of appointmentRepository.findAll() to return the mock appointments
-//        when(appointmentRepository.findAll()).thenReturn(appointments);
-//
-//        // Call the method under test
-//        List<AppointmentDto> result = appointmentService.getAll();
-//
-//        // Assert that the result is not null
-//        assertNotNull(result);
-//
-//        // Assert that the result size matches the number of mock appointments
-//        assertEquals(2, result.size());
-//
-//        // Assert that the appointmentDto properties are correctly mapped from the appointment objects
-//        AppointmentDto appointmentDto1 = result.get(0);
-//        assertEquals(1, appointmentDto1.getId());
-//        assertEquals("100.0", appointmentDto1.getAmount());
-//        // Assert other properties
-//
-//        AppointmentDto appointmentDto2 = result.get(1);
-//        assertEquals(2, appointmentDto2.getId());
-//        assertEquals("200.0", appointmentDto2.getAmount());
-//        // Assert other properties
+        //Mock data
+        Appointment appointment1 = new Appointment();
+        appointment1.setId(1);
+        appointment1.setAmount(BigDecimal.valueOf(100.00));
+        // Set other appointment properties
+
+        Appointment appointment2 = new Appointment();
+        appointment2.setId(2);
+        appointment2.setAmount(BigDecimal.valueOf(200.00));
+        // Set other appointment properties
+
+        List<Appointment> appointments = new ArrayList<>();
+        appointments.add(appointment1);
+        appointments.add(appointment2);
+
+        // Mock the behavior of appointmentRepository.findAll() to return the mock appointments
+        when(appointmentRepository.findAll()).thenReturn(appointments);
+
+        // Call the method under test
+        List<AppointmentDto> result = appointmentService.getAll();
+
+        // Assert that the result is not null
+        assertNotNull(result);
+
+        // Assert that the result size matches the number of mock appointments
+        assertEquals(2, result.size());
+
+        // Assert that the appointmentDto properties are correctly mapped from the appointment objects
+        AppointmentDto appointmentDto1 = result.get(0);
+        assertEquals(1, appointmentDto1.id);
+        assertEquals("100.0", appointmentDto1.amount);
+        // Assert other properties
+
+        AppointmentDto appointmentDto2 = result.get(1);
+        assertEquals(2, appointmentDto2.id);
+        assertEquals("200.0", appointmentDto2.amount);
+        // Assert other properties
     }
 }

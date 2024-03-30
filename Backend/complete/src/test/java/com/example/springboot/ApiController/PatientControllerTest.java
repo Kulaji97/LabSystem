@@ -1,12 +1,19 @@
 package com.example.springboot.ApiController;
 
+import com.example.springboot.DTOs.AppointmentDto;
 import com.example.springboot.DTOs.UserDto;
+import com.example.springboot.Entities.Appointment;
 import com.example.springboot.Entities.UserType;
+import com.example.springboot.Repositories.AppointmentRepository;
+import com.example.springboot.Services.AppointmentService;
 import com.example.springboot.Services.UserTypeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,6 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.springboot.Entities.User;
 import com.example.springboot.Services.PatientService;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,51 +39,55 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @WebMvcTest(PatientController.class)
 public class PatientControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+    @Mock
+    private AppointmentRepository appointmentRepository;
 
-    @MockBean
-    private PatientService patientService;
+    @InjectMocks
+    private AppointmentService appointmentService;
 
-    @MockBean
-    private UserTypeService userTypeService;
-
-    @Test
-    public void testCreatePatient() throws Exception {
-        // Prepare a UserDto object
-        UserDto userDto = new UserDto();
-        userDto.name = "John Doe";
-        userDto.gender = "Male";
-        userDto.nic = "1234567890";
-        userDto.email = "john.doe@example.com";
-        userDto.password = "password";
-        userDto.username = "johndoe";
-
-        // Prepare a UserType object
-        UserType userType = new UserType();
-        userType.setId(1);
-        userType.setType("Test");
-
-        // Mock the behavior of patientService
-        User savedPatient = new User();
-        savedPatient.setId(1); // Assuming an ID is set upon saving
-        when(patientService.savePatient(any(User.class))).thenReturn(savedPatient);
-
-        // Perform POST request and verify the response
-        mockMvc.perform(post("/patients/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(userDto)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").exists()); // Assuming your UserDto has an 'id' field
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
-    // Utility method to convert objects to JSON string
-    private String asJsonString(Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    public void testGetAllAppointments() {
+        // Mock data
+//        Appointment appointment1 = new Appointment();
+//        appointment1.setId(1);
+//        appointment1.setAmount(100.0);
+//        // Set other appointment properties
+//
+//        Appointment appointment2 = new Appointment();
+//        appointment2.setId(2);
+//        appointment2.setAmount(200.0);
+//        // Set other appointment properties
+//
+//        List<Appointment> appointments = new ArrayList<>();
+//        appointments.add(appointment1);
+//        appointments.add(appointment2);
+//
+//        // Mock the behavior of appointmentRepository.findAll() to return the mock appointments
+//        when(appointmentRepository.findAll()).thenReturn(appointments);
+//
+//        // Call the method under test
+//        List<AppointmentDto> result = appointmentService.getAll();
+//
+//        // Assert that the result is not null
+//        assertNotNull(result);
+//
+//        // Assert that the result size matches the number of mock appointments
+//        assertEquals(2, result.size());
+//
+//        // Assert that the appointmentDto properties are correctly mapped from the appointment objects
+//        AppointmentDto appointmentDto1 = result.get(0);
+//        assertEquals(1, appointmentDto1.getId());
+//        assertEquals("100.0", appointmentDto1.getAmount());
+//        // Assert other properties
+//
+//        AppointmentDto appointmentDto2 = result.get(1);
+//        assertEquals(2, appointmentDto2.getId());
+//        assertEquals("200.0", appointmentDto2.getAmount());
+//        // Assert other properties
     }
 }

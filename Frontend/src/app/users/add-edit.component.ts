@@ -90,7 +90,6 @@ export class AddEditComponent implements OnInit {
 
     private saveUser() {
         // create or update user based on id param
-        alert(this.id);
         return this.id
             ? this.accountService.update(this.id!, this.form.value)
             : this.accountService.register(this.form.value);

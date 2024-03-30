@@ -5,6 +5,8 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { AppointmentsRoutingModule } from './appointments-routing.module';
 import { AppointmentViewComponent } from './view.component';
 import { LayoutComponent } from './layout.component';
+import { AddAppointmentComponent } from './add.component';
+import { AppointmentsListComponent } from './appointments-list.components';
 
 @NgModule({
     imports: [
@@ -15,6 +17,8 @@ import { LayoutComponent } from './layout.component';
     declarations: [
         LayoutComponent,
         AppointmentViewComponent,
+        AddAppointmentComponent,
+        AppointmentsListComponent
     ],
     providers: [DecimalPipe]
 })

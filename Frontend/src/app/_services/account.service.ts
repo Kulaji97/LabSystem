@@ -39,7 +39,6 @@ export class AccountService {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
             this.userSubject.next(user);
-            alert(user.email);
             return user;
         }));
     }
@@ -53,19 +52,22 @@ export class AccountService {
 
     register(user: User) {
         //creating a patient
-        alert(user.email);
         return this.http.post<User>(`http://localhost:8080/patients/create`, user);
     }
 
-    // updateUser(user: User) {
-    //     return this.http.post(`http://localhost:8080/patients/all`, user);
-    // }
+    addAppointment(appointment: Appointment) {
+        return this.http.post<any>(`http://localhost:8080/appointments/create`, appointment);
+    }
 
 
     getAll() {
         return this.http.get<User[]>(`http://localhost:8080/patients/all`);
     }
     
+    getAllAppointments() {
+        return this.http.get<Appointment[]>(`http://localhost:8080/appointments/all`);
+    }
+
     getById(id: string) {
         return this.http.get<User>(`http://localhost:8080/users/${id}`);
     }
@@ -73,7 +75,6 @@ export class AccountService {
     update(id: string, params: any) {
         return this.http.put<any>(`http://localhost:8080/users/${id}`, params)
             .pipe(map(x => {
-                alert(x);
                 // update stored user if the logged in user updated their own record
                 if (id == this.userValue?.id) {
                     // update local storage
@@ -100,7 +101,6 @@ export class AccountService {
     }
 
     getAppointmentByPatientId(userId: string) {
-        alert("user id" + userId);
         return this.http.get<Appointment[]>(`http://localhost:8080/user/appointment/${userId}`);
     }
 

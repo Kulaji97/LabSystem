@@ -2,7 +2,6 @@
 import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_services';
-import { User } from '@app/_models';
 
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
@@ -23,10 +22,4 @@ export class ListComponent implements OnInit {
             .pipe(first())
             .subscribe(() => this.users = this.users!.filter(x => x.id !== id));
     }
-
-    // upadateUser(user: User) {
-    //     this.accountService.update(id)
-    //         .pipe(first())
-    //         .subscribe(() => this.users = this.users!.filter(x => x.id !== id));
-    // }
 }

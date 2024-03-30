@@ -26,23 +26,7 @@ export class AppointmentViewComponent implements OnInit{
 
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
-        alert(this.id );
         this.loading = true;
-        // if (this.id)
-        // {
-        //     this.accountService.getById(this.id)
-        //             .pipe(first())
-        //             .subscribe(
-        //                 (user: User) => {
-        //                   this.user = user;
-        //                   this.user.id = this.id;
-        //                   this.loading = false;
-        //                 },
-        //                 error => {
-        //                   console.error('Error loading user:', error);
-        //                   this.loading = false;
-        //                 });
-        // }
         
         if (this.id) {
             this.accountService.getAppointmentById(this.id)

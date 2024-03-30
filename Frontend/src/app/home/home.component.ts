@@ -8,7 +8,6 @@ export class HomeComponent {
     user: User | null;
 
     constructor(private accountService: AccountService) {
-        alert("home!");
         this.user = this.accountService.userValue;
     }
 }

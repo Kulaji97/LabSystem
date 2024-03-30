@@ -34,7 +34,7 @@ public class PatientController {
         {
             System.out.println(userDto.name);
 
-            UserType userType = userTypeService.getUserType(1);
+            UserType userType = userTypeService.getUserType(userDto.type);
             User user = new User();
             user.setUsername(userDto.username);
             user.setGender(userDto.gender);
@@ -43,7 +43,8 @@ public class PatientController {
             user.setEmail(userDto.email);
             user.setPassword(userDto.password);
             user.setType(userType);
-            user = patientService.savePatient(user);
+            patientService.savePatient(user);
+
             return ResponseEntity.status(HttpStatus.OK).body(userDto);
         }
         catch (Exception exception)
@@ -55,26 +56,11 @@ public class PatientController {
 
     @CrossOrigin(origins = "http://localhost:4200/")
     @GetMapping("/patients/all")
-    public ResponseEntity<List<User>> getAllPatients()
+    public ResponseEntity<List<UserDto>> getAllPatients()
     {
         try
         {
-            List<User> users = patientService.getAllPatients();
-            return ResponseEntity.status(HttpStatus.OK).body(users);
-        }
-        catch (Exception exception)
-        {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200/")
-    @PostMapping("/patients/update")
-    public ResponseEntity<List<User>> updateUser()
-    {
-        try
-        {
-            List<User> users = patientService.getAllPatients();
+            List<UserDto> users = patientService.getAllPatients();
             return ResponseEntity.status(HttpStatus.OK).body(users);
         }
         catch (Exception exception)

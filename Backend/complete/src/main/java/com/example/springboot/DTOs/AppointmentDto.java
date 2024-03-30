@@ -33,4 +33,5 @@ public class AppointmentDto {
     public Integer testTypeId;
     public String testName;
     public String patientName;
+
 }

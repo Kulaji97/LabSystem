@@ -12,12 +12,12 @@
     <tbody>
         <tr *ngFor="let user of users">
             <td>{{user.name}}</td>
-            <td *ngIf="user.type.id==1">Patient</td>
-            <td *ngIf="user.type.id==2">Doctor</td>
-            <td *ngIf="user.type.id==3">Technician</td>
+            <td *ngIf="user.type==1">Patient</td>
+            <td *ngIf="user.type==2">Doctor</td>
+            <td *ngIf="user.type==3">Technician</td>
             <td>{{user.gender}}</td>
             <td style="white-space: nowrap">
-                <a routerLink="view/{{user.id}}" class="btn btn-sm btn-primary me-1">View</a>
+                <a routerLink="view/{{user.id}}" class="btn btn-sm btn-success me-1">View</a>
                 <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary me-1">Edit</a>
                 <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
                     <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>

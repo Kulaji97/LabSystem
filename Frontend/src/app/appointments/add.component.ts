@@ -50,7 +50,7 @@ export class AddAppointmentComponent implements OnInit {
         this.accountService.getAll()
             .pipe(first())
             .subscribe(users =>{
-                this.doctors = users.filter(x => x.type = "2")
+                this.doctors = users.filter(user => user.type == "2")
             }
         );
     }

@@ -1,11 +1,15 @@
 package com.example.springboot.Services;
 
+import com.example.springboot.DTOs.AppointmentDto;
+import com.example.springboot.DTOs.UserDto;
 import com.example.springboot.DatabaseConnection.DatabaseSingleton;
+import com.example.springboot.Entities.Appointment;
 import com.example.springboot.Entities.User;
 import com.example.springboot.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,9 +32,24 @@ public class PatientService {
         userRepository.delete(user);
     }
 
-    public List<User> getAllPatients()
+    public List<UserDto> getAllPatients()
     {
-        return userRepository.findAll();
+        List<UserDto> userDtoList = new ArrayList<>();;
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            UserDto userDto = new UserDto();
+            userDto.username = user.getUsername();
+            userDto.name = user.getName();
+            userDto.nic = user.getNic();
+            userDto.gender = user.getGender();
+            userDto.email = user.getEmail();
+            userDto.type = user.getType().getId();
+            userDto.id = user.getId();
+            userDto.password = user.getPassword();
+            userDtoList.add(userDto);
+        }
+
+        return userDtoList;
     }
     public List<User> authenticateUser(String username, String password)
     {

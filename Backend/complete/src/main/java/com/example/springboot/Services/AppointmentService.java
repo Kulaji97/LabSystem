@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -41,7 +42,7 @@ public class AppointmentService {
 
         AppointmentDto appointmentDto = new AppointmentDto();
         appointmentDto.id = appointment.getId();
-        appointmentDto.amount = appointment.getAmount();
+        appointmentDto.amount = appointment.getAmount().toString();
         appointmentDto.doctorId = appointment.getDoctorId();
         appointmentDto.number = appointment.getNumber();
         appointmentDto.time = appointment.getTime();
@@ -69,25 +70,33 @@ public class AppointmentService {
     public List<AppointmentDto> getAppointmentByPatientId(Integer patientId) {
         List<Appointment> appointments = appointmentRepository.findAppointmentByPatientId(patientId);
         List<AppointmentDto> appointmentDtos = new ArrayList<>();
+        try {
+            if (appointments.size() > 0){
+                Collections.sort(appointments, (o1, o2) -> o1.getTime().compareTo( o2.getTime()));
+                for (Appointment appointment : appointments)
+                {
+                    AppointmentDto appointmentDto = new AppointmentDto();
+                    appointmentDto.id = appointment.getId();
+                    appointmentDto.amount = appointment.getAmount().toString();
+                    appointmentDto.doctorId = appointment.getDoctorId();
+                    appointmentDto.number = appointment.getNumber();
+                    appointmentDto.time = appointment.getTime();
+                    appointmentDto.patientId = appointment.getPatient().getId();
+                    appointmentDto.paymentDate = appointment.getPaymentDate();
+                    appointmentDto.paymentStatus = getPaymentStatusName(appointment.getPaymentStatus());
+                    appointmentDto.testTypeId = appointment.getTestType().getId();
+                    appointmentDto.testName = appointment.getTestType().getType();
+                    appointmentDtos.add(appointmentDto);
 
-        if (appointments.size() > 1){
-            Collections.sort(appointments, (o1, o2) -> o1.getTime().compareTo( o2.getTime()));
-            for (Appointment appointment : appointments)
-            {
-                AppointmentDto appointmentDto = new AppointmentDto();
-                appointmentDto.id = appointment.getId();
-                appointmentDto.amount = appointment.getAmount();
-                appointmentDto.doctorId = appointment.getDoctorId();
-                appointmentDto.number = appointment.getNumber();
-                appointmentDto.time = appointment.getTime();
-                appointmentDto.patientId = appointment.getPatient().getId();
-                appointmentDto.paymentDate = appointment.getPaymentDate();
-                appointmentDto.paymentStatus = getPaymentStatusName(appointment.getPaymentStatus());
-                appointmentDto.testTypeId = appointment.getTestType().getId();
-                appointmentDto.testName = appointment.getTestType().getType();
-                appointmentDtos.add(appointmentDto);
+                    System.out.println(appointmentDto.number);
+                }
             }
         }
+        catch (Exception exception)
+        {
+            System.out.println(exception.getLocalizedMessage());
+        }
+
         return appointmentDtos;
     }
 
@@ -98,16 +107,18 @@ public class AppointmentService {
         return maxNumber + 1;
     }
 
-    public Appointment createAppointment(Appointment appointment)
-    {
+    public Appointment createAppointment(AppointmentDto appointment) throws ChangeSetPersister.NotFoundException {
         //get the maximum number based on the test type and date
-        int newAppointmentNumber = generateAppointmentNumber(appointment.getTestType().getId(), appointment.getTime().toLocalDate());
+        int newAppointmentNumber = generateAppointmentNumber(appointment.testTypeId, appointment.time.toLocalDate());
 
         //patient appointment time = date + 8hr (lab opening time) + (max_number * 30min)
-        LocalDateTime newAppointmentTime = appointment.getTime().plusMinutes((8*60) + (newAppointmentNumber* 30L));
+        LocalDateTime newAppointmentTime = appointment.time.plusMinutes((8*60) + (newAppointmentNumber* 30L));
 
         //create new appointment
-        Appointment newAppointment = appointment;
+        Appointment newAppointment = new Appointment();
+
+        TestType testType = testTypeService.getTestType(appointment.testTypeId);
+        newAppointment.setTestType(testType);
         newAppointment.setPaymentStatus(PaymentStatus.AWAITING_PAYMENT);
         newAppointment.setTime(newAppointmentTime);
         newAppointment.setNumber(newAppointmentNumber);
@@ -119,12 +130,21 @@ public class AppointmentService {
         Appointment appointment = getAppointment(newAppointment.id);
         appointment.setPaymentDate(newAppointment.paymentDate);
         appointment.setPaymentMethod(newAppointment.paymentMethod);
-        if (appointment.getAmount() == newAppointment.amount) {
-            appointment.setPaymentStatus(PaymentStatus.PAID);
-        } else {
-            appointment.setPaymentStatus(PaymentStatus.PARTIAL);
-        }
+        System.out.println("Amount    "+newAppointment.amount);
+        appointment.setPaymentStatus(PaymentStatus.PAID);
 
         return appointmentRepository.save(appointment);
     }
+
+    public BigDecimal convertStringToDecimal(String stringWithComma)
+    {
+        // Remove comma from the string
+        String stringWithoutComma = stringWithComma.replaceAll(",", "");
+
+        // Parse the string into a BigDecimal
+        BigDecimal bigDecimalValue = new BigDecimal(stringWithoutComma);
+
+        return bigDecimalValue;
+    }
+
 }

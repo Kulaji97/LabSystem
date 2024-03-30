@@ -18,7 +18,7 @@ public class TestTypeService {
         this.databaseSingleton = DatabaseSingleton.getInstance();
     }
 
-    public TestType getUserType(int id) throws ChangeSetPersister.NotFoundException {
+    public TestType getTestType(int id) throws ChangeSetPersister.NotFoundException {
         TestType userType = testTypeRepository.findById(id)
                 .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
 

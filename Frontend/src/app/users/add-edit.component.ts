@@ -94,5 +94,11 @@ export class AddEditComponent implements OnInit {
         return this.id
             ? this.accountService.update(this.id!, this.form.value)
             : this.accountService.register(this.form.value);
+
+            // if(this.id != null) {
+            //     this.accountService.update(this.id!, this.form.value)
+            // }  else{
+            //     this.accountService.register(this.form.value)
+            
     }
 }

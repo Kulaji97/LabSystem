@@ -49,7 +49,6 @@ public class AppointmentService {
         appointmentDto.time = appointment.getTime().toString();
         appointmentDto.patientId = appointment.getPatient().getId();
         appointmentDto.paymentDate = appointment.getPaymentDate();
-        System.out.println(appointment.getPaymentStatus());
         appointmentDto.paymentStatus = getPaymentStatusName(appointment.getPaymentStatus());
         appointmentDto.testTypeId = appointment.getTestType().getId();
         appointmentDto.testName = appointment.getTestType().getType();
@@ -88,8 +87,6 @@ public class AppointmentService {
                     appointmentDto.testTypeId = appointment.getTestType().getId();
                     appointmentDto.testName = appointment.getTestType().getType();
                     appointmentDtos.add(appointmentDto);
-
-                    System.out.println(appointmentDto.number);
                 }
             }
         }
@@ -137,12 +134,10 @@ public class AppointmentService {
     {
         List<Appointment> appointments = appointmentRepository.findByTestTypeAndDate(testTypeId, date, date.plusDays(1));
 
-        System.out.println("Appointments --------------------- " + appointments);
-
         int maxNumber = (appointments!= null && appointments.size()>0)
                 ? appointments.stream().max(Comparator.comparingInt(Appointment::getNumber)).get().getNumber()
                 : 0;
-        System.out.println("maxNumber --------------------- " + maxNumber);
+
         return maxNumber + 1;
     }
 
@@ -176,7 +171,7 @@ public class AppointmentService {
 
     public Appointment updatePaymentDetails(AppointmentDto newAppointment) throws ChangeSetPersister.NotFoundException {
         Appointment appointment = getAppointment(newAppointment.id);
-        appointment.setPaymentDate(newAppointment.paymentDate);
+        appointment.setPaymentDate(LocalDateTime.now());
         appointment.setPaymentMethod(newAppointment.paymentMethod);
         appointment.setPaymentStatus(PaymentStatus.PAID);
 

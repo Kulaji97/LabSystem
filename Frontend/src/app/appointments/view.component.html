@@ -28,7 +28,8 @@
                 </div>                
               </div>
               <div class="card-footer">
-                  <a routerLink="/appointments/{{appointment?.id}}/payment" class="btn btn-warning">Pay >></a>
+                  <a *ngIf="appointment?.paymentStatus != 'Paid'" style="margin-right: 5px;" routerLink="/appointments/{{appointment?.id}}/payment" class="btn btn-warning">Pay >></a>
+                  <a routerLink="/users/view/{{appointment?.patientId}}" class="btn btn-danger">Go Back</a>
               </div>
             </div>
           </div>
@@ -69,7 +70,7 @@
                 </div>
                 <div class="col-6 mb-3">
                   <h6>Upload Test</h6>
-                  <input type="file" class="btn btn-primary me-2 file-upload" (change)="onFileSelected($event)" accept=".pdf">
+                  <input type="file" class="btn btn-outline-secondary me-2 file-upload" (change)="onFileSelected($event)" accept=".pdf">
                 </div>
               </div> 
               

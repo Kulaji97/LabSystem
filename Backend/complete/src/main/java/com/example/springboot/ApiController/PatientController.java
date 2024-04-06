@@ -96,7 +96,6 @@ public class PatientController {
     public ResponseEntity<User> updateUserById(@PathVariable String id,
                                                @RequestBody UserDto newUser)
     {
-        System.out.println("-------------------------UPDATE ------------------------------");
         try
         {
             User user = patientService.getUserDetailsById(Integer.parseInt(id));
@@ -138,12 +137,8 @@ public class PatientController {
     {
         try
         {
-            System.out.println(user.getUsername() + " " + user.getPassword());
-            System.out.println(LocalDateTime.now());
             List<User> users = patientService.authenticateUser(user.getUsername(), user.getPassword());
             if (users.size()> 0) {
-                System.out.println("1 is there");
-                System.out.println(users.getFirst().getName());
                 return ResponseEntity.status(HttpStatus.OK).body(users.getFirst());
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

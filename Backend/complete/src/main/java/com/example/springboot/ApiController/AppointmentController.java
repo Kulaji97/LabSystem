@@ -2,17 +2,25 @@ package com.example.springboot.ApiController;
 
 import com.example.springboot.DTOs.AppointmentDto;
 import com.example.springboot.Entities.Appointment;
+import com.example.springboot.Entities.Test;
 import com.example.springboot.Entities.User;
 import com.example.springboot.Services.AppointmentService;
 import com.example.springboot.Services.EmailService;
 import com.example.springboot.Services.PatientService;
+import com.example.springboot.Services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200/")
@@ -21,12 +29,17 @@ public class AppointmentController {
 	private final AppointmentService appointmentService;
 	private final PatientService patientService;
 	private final EmailService emailService;
+	private final TestService testService;
 
 	@Autowired
-	public AppointmentController(AppointmentService appointmentService, PatientService patientService, EmailService emailService) {
+	public AppointmentController(AppointmentService appointmentService,
+								 PatientService patientService,
+								 EmailService emailService,
+								 TestService testService) {
 		this.appointmentService = appointmentService;
 		this.patientService = patientService;
 		this.emailService = emailService;
+		this.testService = testService;
 	}
 
 	//@GetMapping("/appointments/create")

@@ -9,19 +9,14 @@ import { RouterModule } from '@angular/router';
 import { AccountService, AlertService } from '@app/_services';
 import { Appointment } from '@app/_models/appointment';
 import { HttpClient } from '@angular/common/http';
-import { Test } from '@app/_models/test';
 
 @Component({ templateUrl: 'view.component.html' })
-export class AppointmentViewComponent implements OnInit{
+export class TestsViewComponent implements OnInit{
     id?: string;
     user?:User;
     loading = false;
     appointment?:Appointment;
     selectedFile: File | null = null;
-    technicians?: User[];
-    form!: FormGroup;
-    technician?: string;
-    test?:Test;
     
     constructor(
         private formBuilder: FormBuilder,
@@ -48,30 +43,12 @@ export class AppointmentViewComponent implements OnInit{
                         this.appointment = appointment;
                     }
                 );
-
-            this.accountService.getTestByAppointmentId(this.id).pipe(first())
-                .subscribe((test: Test) => {
-                  this.test = test;
-                });
         }
-
-        this.form = this.formBuilder.group({
-          testtype: ['', Validators.required],
-          technician: ['', Validators.required],
-        });
-
-        this.accountService.getAll()
-            .pipe(first())
-            .subscribe(users =>{
-                this.technicians = users.filter(user => user.type == "3")
-            }
-        );
         
-      }
-
-    setTechnician(e:any) {
-        const selectedTechnicianId = e.target.value;
-        this.technician = selectedTechnicianId;
+        }
+    uploadTest() {
+        // Logic to handle test upload
+        console.log('Upload test button clicked');
     }
         
     payNow() {
@@ -86,20 +63,9 @@ export class AppointmentViewComponent implements OnInit{
           if (this.id) {
             formData.set("id", this.id);
           }
-
-          if (this.appointment?.id) {
-            formData.set("appointment_id", this.appointment.id);
-          }
-
-          if (this.technician) {
-            formData.set("technician_id", this.technician);
-          }
-
+          
           this.http.post<any>('http://localhost:8080/tests/upload', formData).subscribe(response => {
-            console.log('File uploaded successfully:', response);
-            const path = "uploads/" + response;
-            this.alertService.success(path);
-            this.router.navigateByUrl('/users');
+            console.log('File uploaded successfully:', response.localFolderUrl);
           });
         }
       }

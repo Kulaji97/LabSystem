@@ -1,0 +1,43 @@
+<div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="card-body p-4">
+                <h6>Appointment Information</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Date</h6>
+                    <p class="text-muted">{{ appointment?.time }}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Payment Status</h6>
+                    <p class="text-muted">{{ appointment?.paymentStatus }}</p>
+                  </div>
+                </div>
+
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Appointment Number</h6>
+                    <p class="text-muted">{{appointment?.number}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Test Type</h6>
+                    <p class="text-muted">{{appointment?.testName}}</p>
+                  </div>
+                </div>
+
+                <input type="file" class="btn btn-success me-2 file-upload" onchange="console.log(event.target.files)"/>
+                <input type="file" (change)="onFileSelected($event)" accept=".pdf">
+
+<button (click)="uploadFile()">Upload</button>
+
+                </div>
+              <div class="card-footer">
+                  <a routerLink="/appointments/{{appointment?.id}}/payment" class="btn btn-warning">Pay >></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      

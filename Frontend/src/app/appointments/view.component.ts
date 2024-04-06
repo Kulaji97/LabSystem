@@ -19,7 +19,6 @@ export class AppointmentViewComponent implements OnInit{
     appointment?:Appointment;
     selectedFile: File | null = null;
     technicians?: User[];
-    form!: FormGroup;
     technician?: string;
     test?:Test;
     
@@ -33,8 +32,8 @@ export class AppointmentViewComponent implements OnInit{
     ) { }
 
     onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
+      this.selectedFile = event.target.files[0];
+    }
 
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
@@ -55,11 +54,6 @@ export class AppointmentViewComponent implements OnInit{
                 });
         }
 
-        this.form = this.formBuilder.group({
-          testtype: ['', Validators.required],
-          technician: ['', Validators.required],
-        });
-
         this.accountService.getAll()
             .pipe(first())
             .subscribe(users =>{
@@ -73,12 +67,7 @@ export class AppointmentViewComponent implements OnInit{
         const selectedTechnicianId = e.target.value;
         this.technician = selectedTechnicianId;
     }
-        
-    payNow() {
-        // Logic to handle payment
-        console.log('Pay now button clicked');
-    }
-
+       
     uploadFile() {
         if (this.selectedFile) {
           const formData = new FormData();
@@ -97,9 +86,9 @@ export class AppointmentViewComponent implements OnInit{
 
           this.http.post<any>('http://localhost:8080/tests/upload', formData).subscribe(response => {
             console.log('File uploaded successfully:', response);
-            const path = "uploads/" + response;
-            this.alertService.success(path);
-            this.router.navigateByUrl('/users');
+            //this.router.navigateByUrl('/appointments/view/'+this.appointment?.id);
+            this.ngOnInit();
+            this.alertService.success('Test Created Successfully! File uploaded (Uploads/' + response + ')');
           });
         }
       }

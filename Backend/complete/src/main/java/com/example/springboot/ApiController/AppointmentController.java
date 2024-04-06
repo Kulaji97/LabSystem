@@ -42,14 +42,13 @@ public class AppointmentController {
 		this.testService = testService;
 	}
 
-	//@GetMapping("/appointments/create")
 	@PostMapping("/appointments/create")
 	public ResponseEntity<String> createAppointment(@RequestBody AppointmentDto appointment)
 	{
 		try
 		{
 			Appointment newAppointment = appointmentService.createAppointment(appointment);
-			return ResponseEntity.status(HttpStatus.CREATED).body(newAppointment.getTime().toString());
+			return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"Created Successfully\"}");
 		}
 		catch (Exception exception)
 		{
@@ -62,7 +61,7 @@ public class AppointmentController {
 		try
 		{
 			List<AppointmentDto> appointments = appointmentService.getAll();
-			return ResponseEntity.status(HttpStatus.CREATED).body(appointments);
+			return ResponseEntity.status(HttpStatus.OK).body(appointments);
 		}
 		catch (Exception exception)
 		{
@@ -82,7 +81,7 @@ public class AppointmentController {
 		try
 		{
 			List<AppointmentDto> appointments = appointmentService.getAppointmentByPatientId(Integer.parseInt(id));
-			return ResponseEntity.status(HttpStatus.CREATED).body(appointments);
+			return ResponseEntity.status(HttpStatus.OK).body(appointments);
 		}
 		catch (Exception exception)
 		{

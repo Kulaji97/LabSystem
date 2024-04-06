@@ -25,4 +25,9 @@ public class TestService {
         Test newTest = testRepository.save(test);
         return newTest;
     }
+
+    public Test getTestByAppointmentId(int appointmentId) {
+        Test test = testRepository.findByAppointmentId(appointmentId).getFirst();
+        return test;
+    }
 }

@@ -3,4 +3,6 @@ export class Test {
     technicianId?: string;
     resultDescription?: string;
     appointmentId?: string;
+    technicianName?:string;
+    filename?:string;
 }

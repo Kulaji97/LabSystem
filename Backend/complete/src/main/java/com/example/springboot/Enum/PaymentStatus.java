@@ -1,4 +1,4 @@
-package com.example.springboot;
+package com.example.springboot.Enum;
 
 public final class PaymentStatus {
     public static final int AWAITING_PAYMENT = 0;

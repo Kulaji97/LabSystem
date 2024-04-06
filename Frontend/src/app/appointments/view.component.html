@@ -25,13 +25,55 @@
                     <h6>Test Type</h6>
                     <p class="text-muted">{{appointment?.testName}}</p>
                   </div>
-                </div>
-
-                <input type="file" class="btn btn-success me-2 file-upload" onchange="console.log(event.target.files)"/>
-                </div>
+                </div>                
+              </div>
               <div class="card-footer">
                   <a routerLink="/appointments/{{appointment?.id}}/payment" class="btn btn-warning">Pay >></a>
               </div>
+            </div>
+          </div>
+          <div class="card mb-3" style="padding: 0% !important;" *ngIf="test?.id">
+            <div class="card-header">Test Information</div>
+            <div class="card-body">
+
+              <div class="row pt-1">
+                <div class="col-6 mb-3">
+                  <h6>Technician</h6>
+                  <p>{{test?.technicianName}}</p>
+                </div>
+                <div class="col-6 mb-3">
+                  <h6>Test Type</h6>
+                  <p class="text-muted">{{appointment?.testName}}</p>
+                </div>
+                <div class="col-6 mb-3">
+                  <h6>Test File</h6>
+                  <p>Uploaded to LabSystem/Backend/Uploads/{{test?.id}}/{{test?.filename}}</p>
+                </div>
+              </div> 
+            </div>
+          </div>
+          <div class="card mb-3" style="padding: 0% !important;" *ngIf="!test?.id">
+            <div class="card-header">Test Information</div>
+            <div class="card-body">
+
+              <div class="row pt-1">
+                <div class="col-6 mb-3">
+                  <h6>Technician</h6>
+                  <select formControlName="technician" class="form-select" (change)="setTechnician($event)" >
+                    <option *ngFor="let technician of technicians" [value]="technician.id">{{ technician.name }}</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <h6>Test Type</h6>
+                  <p class="text-muted">{{appointment?.testName}}</p>
+                </div>
+                <div class="col-6 mb-3">
+                  <h6>Upload Test</h6>
+                  <input type="file" class="btn btn-primary me-2 file-upload" (change)="onFileSelected($event)" accept=".pdf">
+                </div>
+              </div> 
+              
+              <button type="submit" class="btn btn-success" (click)="uploadFile()">Add Test</button>
             </div>
           </div>
         </div>

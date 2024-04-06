@@ -9,6 +9,7 @@ import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 import { UserType } from '@app/_models/usertype';
 import { Appointment } from '@app/_models/appointment';
+import { Test } from '@app/_models/test';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -70,6 +71,10 @@ export class AccountService {
 
     getById(id: string) {
         return this.http.get<User>(`http://localhost:8080/users/${id}`);
+    }
+
+    getTestByAppointmentId(id: string) {
+        return this.http.get<Test>(`http://localhost:8080/appointment/tests/${id}`);
     }
 
     update(id: string, params: any) {

@@ -1,37 +1,3 @@
-<!-- <div class="container">
-    <h2>User Details</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label font-weight-bold">Name:</label>
-          <div>{{ user?.name }}</div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label font-weight-bold">NIC:</label>
-          <div>{{ user?.nic }}</div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label font-weight-bold">Email:</label>
-          <div>{{ user?.email }}</div>
-        </div>
-        <div class="mb-3">
-          <label class="font-weight-bold">Username:</label>
-          <div>{{ user?.username }}</div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-12">
-        <button class="btn btn-primary me-2" (click)="uploadTest()">Upload Test</button>
-        <button class="btn btn-success" (click)="payNow()">Pay Now</button>
-      </div>
-    </div>
-  </div>
-   -->
-
 <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-lg-6 mb-4 mb-lg-0">
@@ -65,7 +31,7 @@
                   </div>
                   <div class="d-flex justify-content-start">
                     <a routerLink="/users/edit/{{user?.id}}" class="btn btn-sm btn-primary me-1">Edit Details</a>
-                    <a routerLink="/users" class="btn btn-sm btn-secondary me-1">Go Back</a>
+                    <a routerLink="/users" class="btn btn-sm btn-danger me-1">Go Back</a>
                   </div>
                 </div>
               </div>

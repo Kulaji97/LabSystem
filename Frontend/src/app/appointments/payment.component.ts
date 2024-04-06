@@ -45,10 +45,6 @@ export class PaymentComponent implements OnInit{
         }
     
     }
-    uploadTest() {
-        // Logic to handle test upload
-        console.log('Upload test button clicked');
-    }
     
     payNow() {
         // Logic to handle payment
@@ -57,8 +53,9 @@ export class PaymentComponent implements OnInit{
             const email = <HTMLInputElement>document.getElementById("payment_email");
             if (this.appointment) {
                 this.appointment.email = email.value;
+                this.appointment.paymentMethod = "CreditCard";
             }
-            
+
             this.accountService.updateAppointment(this.id, this.appointment)
                 .pipe(first())
                 .subscribe(
